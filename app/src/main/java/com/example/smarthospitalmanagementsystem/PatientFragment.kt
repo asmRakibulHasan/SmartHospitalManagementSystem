@@ -5,55 +5,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smarthospitalmanagementsystem.adapter.Doctor
+import com.example.smarthospitalmanagementsystem.adapter.DoctorAdapter
+import com.example.smarthospitalmanagementsystem.databinding.FragmentLoginBinding
+import com.example.smarthospitalmanagementsystem.databinding.FragmentPatientBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PatientFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PatientFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var doctorAdapter: DoctorAdapter
+    private var _binding: FragmentPatientBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_patient, container, false)
+        _binding = FragmentPatientBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PatientFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PatientFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val doctors = listOf(
+            Doctor(R.drawable.doctor_photo_background, "Dr. Sarah Mitchell", "Ophthalmologist", 4.2f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Marvin King", "Psychiatrist", 4.2f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Emily Carter", "General Practitioner", 3.6f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. James Wright", "Dermatologist", 5.0f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Olivia Evans", "Psychiatrist", 4.8f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. William Harris", "Neurologist", 3.5f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Mia Thompson", "Oncologist", 4.3f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Benjamin Scott", "Pediatrician", 3.6f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Ava Martinez", "General Practitioner", 4.8f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Lucas Clark", "Dermatologist", 4.1f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Isabella Lewis", "Cardiologist", 3.6f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Henry Walker", "Ophthalmologist", 4.6f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Charlotte Young", "Psychiatrist", 4.8f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Alexander Hill", "Dermatologist", 4.5f),
+            Doctor(R.drawable.doctor_photo_background, "Dr. Amelia Green", "Neurologist", 4.1f)
+        )
+
+        doctorAdapter = DoctorAdapter(doctors) { doctor ->
+            // Handle Book Now click
+        }
+        binding.recyclerDoctors.adapter = doctorAdapter
+        binding.recyclerDoctors.layoutManager = LinearLayoutManager(requireContext())
     }
+
 }

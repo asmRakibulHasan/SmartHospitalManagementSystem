@@ -53,8 +53,8 @@ class DoctorPatientViewModel : ViewModel() {
 
     // Add default users for testing purposes
     private fun addDefaultUsers() {
-        addPatient("Test Patient", "patient@test.com", "123456")
-        addDoctor("Dr. Test", "doctor@test.com", "123456")
+        addPatient("Test Patient", "p@g.c", "123456")
+        addDoctor("Dr. Test", "d@g.c", "123456")
     }
 
     /**
