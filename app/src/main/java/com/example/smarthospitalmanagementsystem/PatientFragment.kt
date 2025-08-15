@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smarthospitalmanagementsystem.adapter.Doctor
 import com.example.smarthospitalmanagementsystem.adapter.DoctorAdapter
@@ -51,7 +52,7 @@ class PatientFragment : Fragment() {
         )
 
         doctorAdapter = DoctorAdapter(doctors) { doctor ->
-            // Handle Book Now click
+            findNavController().navigate(R.id.action_patientFragment_to_prescriptionFragment)
         }
         binding.recyclerDoctors.adapter = doctorAdapter
         binding.recyclerDoctors.layoutManager = LinearLayoutManager(requireContext())

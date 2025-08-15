@@ -42,10 +42,19 @@
         android:id="@+id/patientFragment"
         android:name="com.example.smarthospitalmanagementsystem.PatientFragment"
         android:label="fragment_patient"
-        tools:layout="@layout/fragment_patient" />
+        tools:layout="@layout/fragment_patient" >
+        <action
+            android:id="@+id/action_patientFragment_to_prescriptionFragment"
+            app:destination="@id/prescriptionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/doctorFragment"
         android:name="com.example.smarthospitalmanagementsystem.DoctorFragment"
         android:label="fragment_doctor"
         tools:layout="@layout/fragment_doctor" />
+    <fragment
+        android:id="@+id/prescriptionFragment"
+        android:name="com.example.smarthospitalmanagementsystem.PrescriptionFragment"
+        android:label="fragment_prescription"
+        tools:layout="@layout/fragment_prescription" />
 </navigation>
