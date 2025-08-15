@@ -21,10 +21,31 @@
         android:id="@+id/loginFragment"
         android:name="com.example.smarthospitalmanagementsystem.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_patientFragment"
+            app:destination="@id/patientFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_doctorFragment"
+            app:destination="@id/doctorFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registraionFragment"
         android:name="com.example.smarthospitalmanagementsystem.RegistraionFragment"
         android:label="fragment_registraion"
-        tools:layout="@layout/fragment_registraion" />
+        tools:layout="@layout/fragment_registraion" >
+        <action
+            android:id="@+id/action_registraionFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="com.example.smarthospitalmanagementsystem.PatientFragment"
+        android:label="fragment_patient"
+        tools:layout="@layout/fragment_patient" />
+    <fragment
+        android:id="@+id/doctorFragment"
+        android:name="com.example.smarthospitalmanagementsystem.DoctorFragment"
+        android:label="fragment_doctor"
+        tools:layout="@layout/fragment_doctor" />
 </navigation>
