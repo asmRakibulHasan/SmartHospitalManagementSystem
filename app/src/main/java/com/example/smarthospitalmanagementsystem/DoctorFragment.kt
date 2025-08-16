@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smarthospitalmanagementsystem.databinding.FragmentDoctorBinding
 
@@ -74,7 +75,7 @@ class DoctorFragment : Fragment() {
             "Accepted appointment with ${patientRequest.patientName}",
             Toast.LENGTH_SHORT
         ).show()
-
+        findNavController().navigate(R.id.action_doctorFragment_to_scheduleFragment)
     }
 
     override fun onDestroyView() {
