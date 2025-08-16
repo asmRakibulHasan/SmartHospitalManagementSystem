@@ -1,59 +1,84 @@
 package com.example.smarthospitalmanagementsystem
 
+import com.example.smarthospitalmanagementsystem.adapter.PatientRequest
+import com.example.smarthospitalmanagementsystem.adapter.PatientRequestAdapter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smarthospitalmanagementsystem.databinding.FragmentDoctorBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DoctorFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DoctorFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentDoctorBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var patientRequestAdapter: PatientRequestAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_doctor, container, false)
+        _binding = FragmentDoctorBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DoctorFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DoctorFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        // Sample data for patient requests
+        val patientRequests = listOf(
+            PatientRequest(R.drawable.doctor_photo_background, "Mrs. Sarah Mac", "Sunday, evening"),
+            PatientRequest(R.drawable.doctor_photo_background, "Ronald Richards", "Sunday, evening"),
+            PatientRequest(R.drawable.doctor_photo_background, "Jenny Wilson", "Monday, morning"),
+            PatientRequest(R.drawable.doctor_photo_background, "Kristin Watson", "Monday, morning"),
+            PatientRequest(R.drawable.doctor_photo_background, "Wade Warren", "Tuesday, afternoon"),
+            PatientRequest(R.drawable.doctor_photo_background, "Devon Lane", "Tuesday, evening"),
+            PatientRequest(R.drawable.doctor_photo_background, "Wade Warren", "Tuesday, afternoon"),
+            PatientRequest(R.drawable.doctor_photo_background, "Devon Lane", "Tuesday, evening"),
+            PatientRequest(R.drawable.doctor_photo_background, "Wade Warren", "Tuesday, afternoon"),
+            PatientRequest(R.drawable.doctor_photo_background, "Devon Lane", "Tuesday, evening"),
+            PatientRequest(R.drawable.doctor_photo_background, "Wade Warren", "Tuesday, afternoon"),
+            PatientRequest(R.drawable.doctor_photo_background, "Devon Lane", "Tuesday, evening"),
+            PatientRequest(R.drawable.doctor_photo_background, "Wade Warren", "Tuesday, afternoon"),
+            PatientRequest(R.drawable.doctor_photo_background, "Devon Lane", "Tuesday, evening")
+        )
+
+        // Initialize adapter with click listener
+        patientRequestAdapter = PatientRequestAdapter(patientRequests) { patientRequest ->
+            handleAcceptClick(patientRequest)
+        }
+
+        // Setup RecyclerView
+        binding.recyclerPatients.apply {
+            adapter = patientRequestAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun handleAcceptClick(patientRequest: PatientRequest) {
+        Log.d("DoctorFragment", "Accept clicked for: ${patientRequest.patientName}")
+        Log.d("DoctorFragment", "Schedule: ${patientRequest.schedule}")
+
+        // Show confirmation toast
+        Toast.makeText(
+            requireContext(),
+            "Accepted appointment with ${patientRequest.patientName}",
+            Toast.LENGTH_SHORT
+        ).show()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

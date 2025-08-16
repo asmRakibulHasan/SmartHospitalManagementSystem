@@ -51,10 +51,19 @@
         android:id="@+id/doctorFragment"
         android:name="com.example.smarthospitalmanagementsystem.DoctorFragment"
         android:label="fragment_doctor"
-        tools:layout="@layout/fragment_doctor" />
+        tools:layout="@layout/fragment_doctor" >
+        <action
+            android:id="@+id/action_doctorFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/prescriptionFragment"
         android:name="com.example.smarthospitalmanagementsystem.PrescriptionFragment"
         android:label="fragment_prescription"
         tools:layout="@layout/fragment_prescription" />
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.smarthospitalmanagementsystem.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" />
 </navigation>
