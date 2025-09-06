@@ -159,7 +159,7 @@ class LoginFragment : Fragment() {
         Log.d("LoginFragment", "Email: $username")
         Log.d("LoginFragment", "====================")
 
-        // Call ViewModel login method
+        // Call ViewModel login method (this now uses Room database)
         viewModel.login(username, password)
     }
 
@@ -255,6 +255,9 @@ class LoginFragment : Fragment() {
         binding.etPassword.setText("")
         binding.etUsername.clearFocus()
         binding.etPassword.clearFocus()
+
+        // Reset button state
+        setLoginButtonLoading(false)
     }
 
     override fun onDestroyView() {

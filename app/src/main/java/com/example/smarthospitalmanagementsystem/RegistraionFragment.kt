@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.smarthospitalmanagementsystem.databinding.FragmentRegistraionBinding
 import com.example.smarthospitalmanagementsystem.viewmodel.DoctorPatientViewModel
+import kotlinx.coroutines.launch
 
 class RegistraionFragment : Fragment() {
 
@@ -45,6 +47,9 @@ class RegistraionFragment : Fragment() {
 
         // Set initial state (Patient selected by default)
         setPatientSelected()
+
+        // Observe registration state
+        observeRegistrationState()
     }
 
     private fun setupClickListeners() {
@@ -107,13 +112,62 @@ class RegistraionFragment : Fragment() {
         Log.d("RegistrationFragment", "Doctor toggle selected")
     }
 
+    private fun observeRegistrationState() {
+        lifecycleScope.launch {
+            viewModel.registrationState.collect { success ->
+                when (success) {
+                    true -> {
+                        val registrationType = if (isPatientSelected) "Patient" else "Doctor"
+                        val successMessage = "$registrationType registration successful"
+                        Toast.makeText(requireContext(), successMessage, Toast.LENGTH_LONG).show()
+
+                        // Log current counts for verification
+                        viewModel.getUserCounts { (patientCount, doctorCount) ->
+                            Log.d("RegistrationFragment", "Current counts - Patients: $patientCount, Doctors: $doctorCount")
+                        }
+
+                        // Clear form fields
+                        clearFormFields()
+
+                        // Navigate back
+                        findNavController().navigateUp()
+
+                        // Reset registration state
+                        viewModel.resetRegistrationState()
+                    }
+                    false -> {
+                        // Email already exists
+                        binding.etEmail.error = "Email already exists"
+                        binding.etEmail.requestFocus()
+                        Toast.makeText(requireContext(), "Email already exists. Please use a different email.", Toast.LENGTH_LONG).show()
+                        Log.w("RegistrationFragment", "Registration failed: Email already exists")
+
+                        // Reset registration state
+                        viewModel.resetRegistrationState()
+                    }
+                    null -> {
+                        // Initial state, do nothing
+                    }
+                }
+            }
+        }
+    }
+
     private fun handleRegistration() {
         val name = binding.etName.text.toString().trim()
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
 
+        // Clear previous errors
+        binding.etName.error = null
+        binding.etEmail.error = null
+        binding.etPassword.error = null
+
         // Validate inputs
         if (validateInputs(name, email, password)) {
+            // Show loading state
+            setRegistrationButtonLoading(true)
+
             // Process registration
             processRegistration(name, email, password)
         }
@@ -169,34 +223,19 @@ class RegistraionFragment : Fragment() {
         Log.d("RegistrationFragment", "Password: $password")
         Log.d("RegistrationFragment", "============================")
 
-        // Add to ViewModel
-        val success = if (isPatientSelected) {
+        // Add to ViewModel (this will trigger the observer)
+        if (isPatientSelected) {
             viewModel.addPatient(name, email, password)
         } else {
             viewModel.addDoctor(name, email, password)
         }
+    }
 
-        if (success) {
-            // Show success toast
-            val successMessage = "$registrationType registration successful"
-            Toast.makeText(requireContext(), successMessage, Toast.LENGTH_LONG).show()
-
-            // Log current counts for verification
-            val (patientCount, doctorCount) = viewModel.getUserCounts()
-            Log.d("RegistrationFragment", "Current counts - Patients: $patientCount, Doctors: $doctorCount")
-
-            // Clear form fields
-            clearFormFields()
-
-            // Navigate back
-            findNavController().navigateUp()
-        } else {
-            // Email already exists
-            binding.etEmail.error = "Email already exists"
-            binding.etEmail.requestFocus()
-            Toast.makeText(requireContext(), "Email already exists. Please use a different email.", Toast.LENGTH_LONG).show()
-
-            Log.w("RegistrationFragment", "Registration failed: Email already exists - $email")
+    private fun setRegistrationButtonLoading(isLoading: Boolean) {
+        binding.btnProceed.apply {
+            isEnabled = !isLoading
+            text = if (isLoading) "Processing..." else "Proceed"
+            alpha = if (isLoading) 0.7f else 1.0f
         }
     }
 
@@ -207,6 +246,9 @@ class RegistraionFragment : Fragment() {
         binding.etName.clearFocus()
         binding.etEmail.clearFocus()
         binding.etPassword.clearFocus()
+
+        // Reset button state
+        setRegistrationButtonLoading(false)
     }
 
     override fun onDestroyView() {
