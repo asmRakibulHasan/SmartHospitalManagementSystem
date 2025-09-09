@@ -34,6 +34,9 @@ class DoctorPatientViewModel(application: Application) : AndroidViewModel(applic
     private val _registrationState = MutableStateFlow<Boolean?>(null)
     val registrationState: StateFlow<Boolean?> = _registrationState.asStateFlow()
 
+    private val _lastUserName = MutableStateFlow<String>("User")
+    val lastUserName: StateFlow<String> = _lastUserName.asStateFlow()
+
     init {
         val database = AppDatabase.getDatabase(application)
         repository = UserRepository(database.patientDao(), database.doctorDao())
@@ -124,6 +127,7 @@ class DoctorPatientViewModel(application: Application) : AndroidViewModel(applic
                 val patient = repository.loginPatient(email, password)
                 if (patient != null) {
                     Log.d("DoctorPatientViewModel", "Patient login successful: ${patient.name}")
+                    _lastUserName.value = patient.name
                     _loginState.value = LoginState.Success("Patient", patient.name)
                     return@launch
                 }
@@ -132,6 +136,7 @@ class DoctorPatientViewModel(application: Application) : AndroidViewModel(applic
                 val doctor = repository.loginDoctor(email, password)
                 if (doctor != null) {
                     Log.d("DoctorPatientViewModel", "Doctor login successful: ${doctor.name}")
+                    _lastUserName.value = doctor.name
                     _loginState.value = LoginState.Success("Doctor", doctor.name)
                     return@launch
                 }

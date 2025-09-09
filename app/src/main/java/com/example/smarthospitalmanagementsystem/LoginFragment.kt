@@ -196,7 +196,7 @@ class LoginFragment : Fragment() {
         when (userType.lowercase()) {
             "patient" -> {
                 Log.d("LoginFragment", "Navigating to PatientFragment")
-                findNavController().navigate(R.id.action_loginFragment_to_patientFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_userFragment)
             }
             "doctor" -> {
                 Log.d("LoginFragment", "Navigating to DoctorFragment")
