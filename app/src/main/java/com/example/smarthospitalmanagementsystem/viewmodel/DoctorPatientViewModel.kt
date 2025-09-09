@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.example.smarthospitalmanagementsystem.data.database.AppDatabase
+import com.example.smarthospitalmanagementsystem.data.entity.AppointmentEntity
 import com.example.smarthospitalmanagementsystem.data.repository.UserRepository
 import com.example.smarthospitalmanagementsystem.data.entity.PatientEntity
 import com.example.smarthospitalmanagementsystem.data.entity.DoctorEntity
@@ -37,9 +38,14 @@ class DoctorPatientViewModel(application: Application) : AndroidViewModel(applic
     private val _lastUserName = MutableStateFlow<String>("User")
     val lastUserName: StateFlow<String> = _lastUserName.asStateFlow()
 
+    // Appointment booking state
+    private val _appointmentBookingState = MutableStateFlow<Boolean?>(null)
+    val appointmentBookingState: StateFlow<Boolean?> = _appointmentBookingState.asStateFlow()
+
+
     init {
         val database = AppDatabase.getDatabase(application)
-        repository = UserRepository(database.patientDao(), database.doctorDao())
+        repository = UserRepository(database.patientDao(), database.doctorDao(), database.appointmentDao())
         Log.d("DoctorPatientViewModel", "ViewModel initialized with Room database")
 
         // Add default users for testing
@@ -150,6 +156,43 @@ class DoctorPatientViewModel(application: Application) : AndroidViewModel(applic
                 _loginState.value = LoginState.Error("Login failed. Please try again.")
             }
         }
+    }
+
+
+    // Book appointment method
+    fun bookAppointment(
+        doctorName: String,
+        doctorSpecialty: String,
+        appointmentDate: String,
+        appointmentTime: String,
+        chamberLocation: String
+    ) {
+        viewModelScope.launch {
+            try {
+                val appointment = AppointmentEntity(
+                    patientName = _lastUserName.value,
+                    doctorName = doctorName,
+                    doctorSpecialty = doctorSpecialty,
+                    appointmentDate = appointmentDate,
+                    appointmentTime = appointmentTime,
+                    chamberLocation = chamberLocation
+                )
+
+                val appointmentId = repository.insertAppointment(appointment)
+                _appointmentBookingState.value = appointmentId > 0
+
+                Log.d("DoctorPatientViewModel", "Appointment booked successfully with ID: $appointmentId")
+
+            } catch (e: Exception) {
+                Log.e("DoctorPatientViewModel", "Failed to book appointment: ${e.message}")
+                _appointmentBookingState.value = false
+            }
+        }
+    }
+
+    // Reset appointment booking state
+    fun resetAppointmentBookingState() {
+        _appointmentBookingState.value = null
     }
 
     /**

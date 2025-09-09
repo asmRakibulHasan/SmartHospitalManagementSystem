@@ -6,18 +6,21 @@ import androidx.room.RoomDatabase
 import android.content.Context
 import com.example.smarthospitalmanagementsystem.data.entity.PatientEntity
 import com.example.smarthospitalmanagementsystem.data.entity.DoctorEntity
+import com.example.smarthospitalmanagementsystem.data.entity.AppointmentEntity
 import com.example.smarthospitalmanagementsystem.data.dao.PatientDao
 import com.example.smarthospitalmanagementsystem.data.dao.DoctorDao
+import com.example.smarthospitalmanagementsystem.data.dao.AppointmentDao
 
 @Database(
-    entities = [PatientEntity::class, DoctorEntity::class],
-    version = 1,
+    entities = [PatientEntity::class, DoctorEntity::class, AppointmentEntity::class],
+    version = 2, // Updated version
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun patientDao(): PatientDao
     abstract fun doctorDao(): DoctorDao
+    abstract fun appointmentDao(): AppointmentDao
 
     companion object {
         @Volatile
@@ -29,7 +32,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "hospital_management_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration() // For demo purposes
+                    .build()
                 INSTANCE = instance
                 instance
             }

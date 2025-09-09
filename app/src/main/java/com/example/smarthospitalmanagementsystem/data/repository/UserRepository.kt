@@ -2,15 +2,18 @@ package com.example.smarthospitalmanagementsystem.data.repository
 
 import android.util.Log
 import androidx.annotation.WorkerThread
+import com.example.smarthospitalmanagementsystem.data.dao.AppointmentDao
 import kotlinx.coroutines.flow.Flow
 import com.example.smarthospitalmanagementsystem.data.dao.PatientDao
 import com.example.smarthospitalmanagementsystem.data.dao.DoctorDao
+import com.example.smarthospitalmanagementsystem.data.entity.AppointmentEntity
 import com.example.smarthospitalmanagementsystem.data.entity.PatientEntity
 import com.example.smarthospitalmanagementsystem.data.entity.DoctorEntity
 
 class UserRepository(
     private val patientDao: PatientDao,
-    private val doctorDao: DoctorDao
+    private val doctorDao: DoctorDao,
+    val appointmentDao: AppointmentDao
 ) {
 
     // Flow for observing all patients
@@ -92,5 +95,10 @@ class UserRepository(
         }
 
         return Pair(null, null)
+    }
+
+    @WorkerThread
+    suspend fun insertAppointment(appointment: AppointmentEntity): Long {
+        return appointmentDao.insertAppointment(appointment)
     }
 }
