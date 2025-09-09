@@ -97,5 +97,9 @@
         android:id="@+id/paymentFragment"
         android:name="com.example.smarthospitalmanagementsystem.PaymentFragment"
         android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" />
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
 </navigation>

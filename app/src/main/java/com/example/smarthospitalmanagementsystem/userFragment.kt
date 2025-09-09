@@ -47,11 +47,11 @@ class userFragment : Fragment() {
 
     private fun setupClickListeners() {
         // Home button click
-        binding.btnHome.setOnClickListener {
-            Log.d("UserFragment", "Home button clicked")
-            // Navigate back to home or previous screen
-            findNavController().navigateUp()
-        }
+//        binding.btnHome.setOnClickListener {
+//            Log.d("UserFragment", "Home button clicked")
+//            // Navigate back to home or previous screen
+//            findNavController().navigateUp()
+//        }
 
         // Doctor List button click
         binding.btnDoctorList.setOnClickListener {

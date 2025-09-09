@@ -12,9 +12,9 @@
     <!-- Home Button -->
     <Button
         android:id="@+id/btn_home"
-        android:layout_width="120dp"
+        android:layout_width="220dp"
         android:layout_height="56dp"
-        android:text="Home"
+        android:text="Patient View"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
