@@ -52,8 +52,8 @@ class PaymentFragment : Fragment() {
 
         // Set current date and time as demo
         val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-        binding.tvDate.text = currentDate
-        binding.tvTime.text = "10:00 AM" // Demo time
+        binding.tvDate.text = viewModel.lastSelectedDate
+        binding.tvTime.text = viewModel.lastSelectedTime
 
         // Generate booking reference
         val bookingRef = "APT${System.currentTimeMillis().toString().takeLast(5)}"

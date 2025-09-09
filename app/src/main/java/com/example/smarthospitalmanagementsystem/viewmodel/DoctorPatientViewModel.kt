@@ -38,6 +38,9 @@ class DoctorPatientViewModel(application: Application) : AndroidViewModel(applic
     private val _lastUserName = MutableStateFlow<String>("User")
     val lastUserName: StateFlow<String> = _lastUserName.asStateFlow()
 
+    var lastSelectedDate = ""
+    var lastSelectedTime = ""
+
     // Appointment booking state
     private val _appointmentBookingState = MutableStateFlow<Boolean?>(null)
     val appointmentBookingState: StateFlow<Boolean?> = _appointmentBookingState.asStateFlow()

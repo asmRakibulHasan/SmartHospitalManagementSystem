@@ -179,6 +179,9 @@ class BookingFragment : Fragment() {
                             Toast.LENGTH_LONG
                         ).show()
 
+                        viewModel.lastSelectedDate = selectedDate
+                        viewModel.lastSelectedTime = selectedTime
+
                         // Navigate to payment fragment
                         findNavController().navigate(R.id.action_bookingFragment_to_paymentFragment)
 
