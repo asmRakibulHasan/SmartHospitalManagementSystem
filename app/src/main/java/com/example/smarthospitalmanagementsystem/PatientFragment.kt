@@ -39,20 +39,10 @@ class PatientFragment : Fragment() {
             Doctor(R.drawable.doctor_photo_background, "Dr. Emily Carter", "General Practitioner", 3.6f),
             Doctor(R.drawable.doctor_photo_background, "Dr. James Wright", "Dermatologist", 5.0f),
             Doctor(R.drawable.doctor_photo_background, "Dr. Olivia Evans", "Psychiatrist", 4.8f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. William Harris", "Neurologist", 3.5f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Mia Thompson", "Oncologist", 4.3f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Benjamin Scott", "Pediatrician", 3.6f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Ava Martinez", "General Practitioner", 4.8f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Lucas Clark", "Dermatologist", 4.1f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Isabella Lewis", "Cardiologist", 3.6f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Henry Walker", "Ophthalmologist", 4.6f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Charlotte Young", "Psychiatrist", 4.8f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Alexander Hill", "Dermatologist", 4.5f),
-            Doctor(R.drawable.doctor_photo_background, "Dr. Amelia Green", "Neurologist", 4.1f)
         )
 
         doctorAdapter = DoctorAdapter(doctors) { doctor ->
-            findNavController().navigate(R.id.action_patientFragment_to_prescriptionFragment)
+            findNavController().navigate(R.id.action_patientFragment_to_doctorProfileFragment)
         }
         binding.recyclerDoctors.adapter = doctorAdapter
         binding.recyclerDoctors.layoutManager = LinearLayoutManager(requireContext())

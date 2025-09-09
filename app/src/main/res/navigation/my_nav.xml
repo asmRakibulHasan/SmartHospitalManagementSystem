@@ -44,8 +44,8 @@
         android:label="fragment_patient"
         tools:layout="@layout/fragment_patient" >
         <action
-            android:id="@+id/action_patientFragment_to_prescriptionFragment"
-            app:destination="@id/prescriptionFragment" />
+            android:id="@+id/action_patientFragment_to_doctorProfileFragment"
+            app:destination="@id/doctorProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/doctorFragment"
@@ -75,4 +75,27 @@
             android:id="@+id/action_userFragment_to_patientFragment"
             app:destination="@id/patientFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/doctorProfileFragment"
+        android:name="com.example.smarthospitalmanagementsystem.DoctorProfileFragment"
+        android:label="fragment_doctor_profile"
+        tools:layout="@layout/fragment_doctor_profile" >
+        <action
+            android:id="@+id/action_doctorProfileFragment_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.example.smarthospitalmanagementsystem.BookingFragment"
+        android:label="fragment_booking"
+        tools:layout="@layout/fragment_booking" >
+        <action
+            android:id="@+id/action_bookingFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.smarthospitalmanagementsystem.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
 </navigation>
