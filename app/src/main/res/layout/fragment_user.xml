@@ -5,9 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/user_background_gradient"
     android:padding="24dp"
     tools:context=".userFragment">
+
+    <!-- Medical Icon Top Left -->
+    <ImageView
+        android:id="@+id/iv_medical_icon_top"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_medical_cross"
+        android:contentDescription="Medical Cross Icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        app:tint="#80FFFFFF" />
+
+    <!-- Hospital Icon Top Right -->
+    <ImageView
+        android:id="@+id/iv_hospital_icon_top"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_hospital_building"
+        android:contentDescription="Hospital Building Icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        app:tint="#80FFFFFF" />
 
     <!-- Home Button -->
     <Button
@@ -20,10 +44,23 @@
         android:textStyle="bold"
         android:background="@drawable/button_primary"
         android:elevation="4dp"
+        android:drawableStart="@drawable/ic_patient"
+        android:drawablePadding="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/doctor_demo"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="@id/btn_home"
+        app:layout_constraintEnd_toEndOf="@id/btn_home"
+        app:layout_constraintTop_toBottomOf="@id/btn_home"
+        app:layout_constraintBottom_toTopOf="@id/tv_welcome_message"/>
+
 
     <!-- Welcome Message -->
     <TextView
@@ -31,14 +68,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome name!"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
+        android:shadowColor="#40000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Stethoscope Icon Left -->
+    <ImageView
+        android:id="@+id/iv_stethoscope_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_stethoscope"
+        android:contentDescription="Stethoscope Icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_welcome_message"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        app:tint="#60FFFFFF" />
+
+    <!-- Heart Icon Right -->
+    <ImageView
+        android:id="@+id/iv_heart_right"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_heart_medical"
+        android:contentDescription="Medical Heart Icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_welcome_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:tint="#60FFFFFF" />
 
     <!-- Doctor List Button -->
     <Button
@@ -51,9 +118,45 @@
         android:textStyle="bold"
         android:background="@drawable/button_primary"
         android:elevation="4dp"
+        android:drawableStart="@drawable/ic_doctor_list"
+        android:drawablePadding="8dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_welcome_message"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="64dp" />
+
+    <!-- Bottom Decorative Medical Icons -->
+    <LinearLayout
+        android:id="@+id/ll_bottom_icons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_medicine"
+            android:layout_marginEnd="16dp"
+            app:tint="#40FFFFFF" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_ambulance"
+            android:layout_marginEnd="16dp"
+            app:tint="#40FFFFFF" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_first_aid"
+            app:tint="#40FFFFFF" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
